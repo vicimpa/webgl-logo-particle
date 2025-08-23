@@ -13,5 +13,5 @@ export default defineConfig({
     host: true,
     port: 3000
   },
-  plugins: [glsl()]
+  plugins: [glsl({ minify: process.argv.includes('build') })]
 });

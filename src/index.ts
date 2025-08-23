@@ -4,16 +4,14 @@ import { createBufferFromArray, createProgramInfo, createVAOFromBufferInfo, setU
 import myimage from "./logo/image.png";
 
 // Shaders
+import emptyFrag from "./shader/empty.frag";
+import initVert from "./shader/init.vert";
 import processVert from "./shader/process.vert";
-import processFrag from "./shader/process.frag";
 import renderVert from "./shader/render.vert";
 import renderFrag from "./shader/render.frag";
-import initVert from "./shader/init.vert";
-import initFrag from "./shader/init.frag";
 
 // Library
 import { frames } from "./library/frames";
-// import { resize } from "./library/resize";
 import { mouse } from "./library/mouse";
 import { image, type Image } from "./library/image";
 import { texture } from "./library/texture";
@@ -29,15 +27,23 @@ if (!gl)
   throw new Error('Can not create webgl2 context');
 
 
-const init = createProgramInfo(gl, [initVert, initFrag], {
+const init = createProgramInfo(gl, [initVert, emptyFrag], {
   transformFeedbackVaryings: ["vNow", "vMove"],
   transformFeedbackMode: gl.SEPARATE_ATTRIBS,
 });
 
-const process = createProgramInfo(gl, [processVert, processFrag], {
+const process = createProgramInfo(gl, [processVert, emptyFrag], {
   transformFeedbackVaryings: ["vNow", "vMove"],
   transformFeedbackMode: gl.SEPARATE_ATTRIBS,
 });
+
+const params = {
+  attractionStrength: 80,
+  maxSpeed: 1200,
+  mouseRadius: 200,
+  repulsionStrength: 1000,
+  damping: .95
+};
 
 const render = createProgramInfo(gl, [renderVert, renderFrag]);
 
@@ -62,6 +68,7 @@ setUniforms(init, { u_texture, resolution });
 
 gl.useProgram(process.program);
 setUniforms(process, { u_texture, resolution });
+setUniforms(process, params);
 
 gl.useProgram(render.program);
 setUniforms(render, { resolution });
