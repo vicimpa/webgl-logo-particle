@@ -15,6 +15,7 @@ import { frames } from "./library/frames";
 import { mouse } from "./library/mouse";
 import { image, type Image } from "./library/image";
 import { texture } from "./library/texture";
+import { array } from "./library/array";
 
 const canvas = document.querySelector('canvas');
 
@@ -133,9 +134,9 @@ type TFBuffer = { now: WebGLBuffer, move: WebGLBuffer, tf: WebGLTransformFeedbac
 function createBuffers(gl: WebGL2RenderingContext, image: Image, size = 2): TFBuffer[] {
   const buffer = new Float32Array(image.width * image.height * 2);
 
-  return Array.from({ length: size }, (_, i) => {
-    const now = createBufferFromArray(gl, buffer, 'now' + i);
-    const move = createBufferFromArray(gl, buffer, 'move' + i);
+  return array(size, () => {
+    const now = createBufferFromArray(gl, buffer, 'now');
+    const move = createBufferFromArray(gl, buffer, 'move');
     const tf = gl.createTransformFeedback()!;
 
     gl.bindTransformFeedback(gl.TRANSFORM_FEEDBACK, tf);
