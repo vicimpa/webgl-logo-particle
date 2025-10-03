@@ -12,6 +12,10 @@ body {
   color: #fff;
 }
 
+canvas {
+  cursor: pointer;
+}
+
 body {
   background-color: #333;
   display: flex;
