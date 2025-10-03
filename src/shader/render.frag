@@ -4,6 +4,4 @@ out lowp vec4 fragColor;
 
 in lowp vec4 color;
 
-void main() {
-  fragColor = color.bgra;
-}
+void main() { fragColor = color; }

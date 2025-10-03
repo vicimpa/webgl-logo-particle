@@ -1,14 +1,16 @@
 export type Image = { width: number, height: number, buffer: ArrayBuffer; };
+const can = document.createElement('canvas');
+const ctx = can.getContext('2d')!;
 
-export async function image(src: string, type = 'image/png', frameIndex = 0) {
-  const req = await fetch(src);
-  const data = await req.arrayBuffer();
-  const decoder = new ImageDecoder({ type, data });
-  const { image } = await decoder.decode({ frameIndex });
-  const { codedWidth: width, codedHeight: height } = image;
-  const buffer = new ArrayBuffer(height * width * 4);
-  await image.copyTo(buffer);
-  decoder.reset();
-  decoder.close();
-  return { width, height, buffer };
+export async function image(src: string) {
+  const img = new Image();
+  await new Promise<void>((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = reject;
+    img.src = src;
+  });
+  can.width = img.width;
+  can.height = img.height;
+  ctx.drawImage(img, 0, 0);
+  return ctx.getImageData(0, 0, img.width, img.height);
 }
