@@ -1,5 +1,5 @@
 #version 300 es
-precision lowp float;
+precision highp float;
 
 uniform float delta, current;
 uniform vec2 resolution, mouse;
@@ -33,7 +33,8 @@ void main() {
   vec2 repulsionForce = vec2(0.0);
   if (distToMouse < mouseRadius && distToMouse > 0.0) {
     float falloff = mouseRadius - (distToMouse / mouseRadius);
-    repulsionForce = normalize(toMouse) * repulsionStrength * falloff / distToMouse;
+    repulsionForce =
+        normalize(toMouse) * repulsionStrength * falloff / distToMouse;
   }
 
   vec2 totalForce = attractionForce + repulsionForce;

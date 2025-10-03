@@ -1,7 +1,7 @@
 #version 300 es
 
-out lowp vec4 fragColor;
+out highp vec4 fragColor;
 
-in lowp vec4 color;
+in highp vec4 color;
 
 void main() { fragColor = color; }

@@ -1,8 +1,6 @@
 #version 300 es
-precision lowp float;
+precision highp float;
 
 out vec4 fragColor;
 
-void main() {
-  fragColor = vec4(1);
-}
+void main() { fragColor = vec4(1); }

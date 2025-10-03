@@ -1,8 +1,8 @@
 #version 300 es
-precision lowp float;
+precision highp float;
 
 uniform vec2 resolution;
-uniform lowp sampler2D u_texture;
+uniform highp sampler2D u_texture;
 
 out vec2 vNow;
 out vec2 vMove;
